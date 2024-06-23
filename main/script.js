@@ -7,7 +7,8 @@ let nations = {
     changeMin: 1,
     changeMax: 5,
     color: ["#4a4949", "#4a4949", "#e82727", "#e82727", "#edc124", "#edc124"],
-    mood: "bread"
+    mood: "bread",
+    elections: 4
   },
   "POL": {
     key: "POL",
@@ -17,7 +18,8 @@ let nations = {
     changeMin: 1,
     changeMax: 4,
     color: ["#ff0000", "#ff0000", "#dedede", "#dedede"],
-    mood: "sad"
+    mood: "sad",
+    elections: 4
   },
   "CZE": {
     key: "CZE",
@@ -40,7 +42,8 @@ let nations = {
     changeMin: 1,
     changeMax: 3,
     color: ["#ff0000", "#2471ed", "#dedede"],
-    mood: "smol"
+    mood: "smol",
+    elections: 4
   },
   "RUS": {
     key: "RUS",
@@ -50,7 +53,8 @@ let nations = {
     changeMin: 1,
     changeMax: 7,
     color: ["#ff0000", "#2471ed", "#dedede"],
-    mood: "vodka"
+    mood: "vodka",
+    elections: 4
   },
   "USA": {
     key: "USA",
@@ -63,7 +67,8 @@ let nations = {
     changeMin: 1,
     changeMax: 7,
     color: ["#2471ed", "#dedede", "#ff0000"],
-    mood: "free"
+    mood: "free",
+    elections: 4
   },
   "HUN": {
     key: "HUN",
@@ -73,7 +78,8 @@ let nations = {
     changeMin: 1,
     changeMax: 3,
     color: ["#ed3c2f", "#e0e0e0", "#35b83c"],
-    mood: "ew"
+    mood: "ew",
+    elections: 4
   },
   "FRA": {
     key: "FRA",
@@ -83,7 +89,8 @@ let nations = {
     changeMin: 1,
     changeMax: 5,
     color: ["#041185", "#f2f2f2", "#f53333"],
-    mood: "quassont"
+    mood: "quassont",
+    elections: 4
   },
   "SCT": {
     key: "SCT",
@@ -93,7 +100,8 @@ let nations = {
     changeMin: 1,
     changeMax: 2,
     color: ["#33e1f5", "#f2f2f2", "#33e1f5"],
-    mood: "nub"
+    mood: "nub",
+    elections: 150
   },
 }
 
