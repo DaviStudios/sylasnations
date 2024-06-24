@@ -1,3 +1,50 @@
+const ideologies = {
+  democratic: {
+    format: 'Republic of COUNTRY',
+    change: 5,
+    max: 4500,
+    leader: 'President LEADER'
+  },
+  communist: {
+    format: 'Socialist Republic of COUNTRY',
+    change: 3,
+    max: 4500,
+    leader: 'President LEADER'
+  },
+  fascist: {
+    format: 'Empire of COUNTRY',
+    change: 4,
+    max: 4500,
+    leader: 'Emperor LEADER'
+  },
+  monarchist: {
+    format: 'Kingdom of COUNTRY',
+    change: 6,
+    max: 5000,
+    leader: 'King LEADER'
+  },
+  theocratic: {
+    format: 'COUNTRY',
+    change: 8,
+    max: 650,
+    leader: 'Father LEADER'
+  }
+}
+
+const alliances = {
+  Alpha: [],
+  Beta: [],
+  Gamma: []
+}
+
+const leaders = {
+  ENG: ['David', 'Lucas', 'Edward', 'Charles'],
+  RUS: ['Ivan', 'Andrei', 'Maxim', 'Aleksandr'],
+  CZK: ['David', 'Lukáš', 'Matěj', 'Karel'],
+  FRA: ['Gabriel', 'Raphaël', 'Louise', 'Léo'],
+  GER: ['Carl', 'Leopol', 'Louis', 'Frederick'],
+}
+
 let nations = {
   "GER": {
     key: "GER",
@@ -8,7 +55,8 @@ let nations = {
     changeMax: 5,
     color: ["#4a4949", "#4a4949", "#e82727", "#e82727", "#edc124", "#edc124"],
     mood: "bread",
-    elections: 4
+    elections: 4,
+    leaders: leaders.GER
   },
   "POL": {
     key: "POL",
@@ -19,7 +67,8 @@ let nations = {
     changeMax: 4,
     color: ["#ff0000", "#ff0000", "#dedede", "#dedede"],
     mood: "sad",
-    elections: 4
+    elections: 4,
+    leaders: leaders.CZK
   },
   "CZE": {
     key: "CZE",
@@ -32,7 +81,8 @@ let nations = {
     format: 'COUNTRY republic',
     color: ["#ff0000", "#2471ed", "#dedede"],
     mood: "beer",
-    elections: 4
+    elections: 4,
+    leaders: leaders.CZK
   },
   "SKO": {
     key: "SKO",
@@ -43,7 +93,8 @@ let nations = {
     changeMax: 3,
     color: ["#ff0000", "#2471ed", "#dedede"],
     mood: "smol",
-    elections: 4
+    elections: 4,
+    leaders: leaders.CZK
   },
   "RUS": {
     key: "RUS",
@@ -54,7 +105,8 @@ let nations = {
     changeMax: 7,
     color: ["#ff0000", "#2471ed", "#dedede"],
     mood: "vodka",
-    elections: 4
+    elections: 4,
+    leaders: leaders.RUS
   },
   "USA": {
     key: "USA",
@@ -68,7 +120,8 @@ let nations = {
     changeMax: 7,
     color: ["#2471ed", "#dedede", "#ff0000"],
     mood: "free",
-    elections: 4
+    elections: 4,
+    leaders: leaders.ENG
   },
   "HUN": {
     key: "HUN",
@@ -79,7 +132,8 @@ let nations = {
     changeMax: 3,
     color: ["#ed3c2f", "#e0e0e0", "#35b83c"],
     mood: "ew",
-    elections: 4
+    elections: 4,
+    leaders: leaders.FRA
   },
   "FRA": {
     key: "FRA",
@@ -90,7 +144,8 @@ let nations = {
     changeMax: 5,
     color: ["#041185", "#f2f2f2", "#f53333"],
     mood: "quassont",
-    elections: 4
+    elections: 4,
+    leaders: leaders.FRA
   },
   "SCT": {
     key: "SCT",
@@ -101,42 +156,21 @@ let nations = {
     changeMax: 2,
     color: ["#33e1f5", "#f2f2f2", "#33e1f5"],
     mood: "nub",
-    elections: 150
+    elections: 40,
+    leaders: leaders.ENG
   },
-}
-
-const ideologies = {
-  democratic: {
-    format: 'Republic of COUNTRY',
-    change: 5,
-    max: 4500
+  "PAP": {
+    key: "PAP",
+    name: "Vatican City",
+    ideology: "monarchist",
+    power: 1,
+    changeMin: 1,
+    changeMax: 1,
+    color: ["#ffde00", "#ffffff"],
+    mood: "nub",
+    elections: 40,
+    leaders: [...leaders.GER, ...leaders.FRA]
   },
-  communist: {
-    format: 'Socialist Republic of COUNTRY',
-    change: 3,
-    max: 4500
-  },
-  fascist: {
-    format: 'Empire of COUNTRY',
-    change: 4,
-    max: 4500
-  },
-  monarchist: {
-    format: 'Kingdom of COUNTRY',
-    change: 6,
-    max: 5000
-  },
-  theocratic: {
-    format: 'COUNTRY',
-    change: 8,
-    max: 650
-  }
-}
-
-const alliances = {
-  Alpha: [],
-  Beta: [],
-  Gamma: []
 }
 
 let backMap = {}
@@ -214,10 +248,14 @@ function c() {
   }
 }
 
-function choiceR(dict) {
+function choiceRD(dict) {
   const k = Object.keys(dict);
   const rk = k[Math.floor(Math.random() * k.length)];
   return rk;
+}
+function choiceRA(array) {
+  const rk = Math.floor(Math.random() * array.length)
+  return array[rk];
 }
 
 function isd(n, n2) {
@@ -225,21 +263,30 @@ function isd(n, n2) {
 }
 
 function tick() {
-  ycounter += 0.5
-  if (ycounter == ny) {
-    year += 1
-    ycounter = 0
-    document.getElementById('year').textContent = 'YEAR: ' + year
-  }
   if (canTick == true) {
+    ycounter += 0.5
+    if (ycounter == ny) {
+      year += 1
+      ycounter = 0
+      document.getElementById('year').textContent = 'YEAR: ' + year
+    }
     backMap = {}
     for (const k in nations) {
+      if (nations[k].hasOwnProperty('leaders')) {
+        if (!nations[k].hasOwnProperty('leader')) {
+          nations[k]['leader'] = choiceRA(nations[k].leaders)
+        }
+      } else {
+        nations[k]['leaders'] = leaders.ENG
+        nations[k]['leader'] = choiceRA(nations[k].leaders)
+      }
       if (nations[k].hasOwnProperty('elections')) {
         if (nations[k].hasOwnProperty('nextElection')) {
           if (nations[k].nextElection == year) {
             const c = Math.random()
             if (c <= 0.35) {
-              nations[k].ideology = choiceR(ideologies)
+              nations[k].ideology = choiceRD(ideologies)
+              nations[k]['leader'] = choiceRA(nations[k].leaders)
             }
             nations[k].nextElection += nations[k].elections
           }
@@ -264,11 +311,11 @@ function tick() {
         bonus(bType, nations[k].key)
       }
       if (nations[k].attributes && nations[k].attributes.includes("noformat")) {
-        nl.textContent = k + ": " + nations[k].name + ", POWER: " + nations[k].power + ", MOOD: " + nations[k].mood + ", IDEOLOGY: " + nations[k].ideology;
+        nl.textContent = k + ": " + nations[k].name + ", POWER: " + nations[k].power + ", MOOD: " + nations[k].mood + ", IDEOLOGY: " + nations[k].ideology + ', LEADER: ' + ideologies[nations[k].ideology].leader.replace('LEADER', nations[k].leader);
       } else {
-        nl.textContent = k + ": " + ideologies[nations[k].ideology].format.replace('COUNTRY', nations[k].name) + ", POWER: " + nations[k].power + ", MOOD: " + nations[k].mood + ", IDEOLOGY: " + nations[k].ideology;
+        nl.textContent = k + ": " + ideologies[nations[k].ideology].format.replace('COUNTRY', nations[k].name) + ", POWER: " + nations[k].power + ", MOOD: " + nations[k].mood + ", IDEOLOGY: " + nations[k].ideology + ', LEADER: ' + ideologies[nations[k].ideology].leader.replace('LEADER', nations[k].leader);
       }
-      nl.style = "background-image: linear-gradient(to right, " + nations[k].color + ");" + " background-repeat: no-repeat; cursor: pointer; padding-top: 5px; padding-bottom: 5px; border: 1px solid white;"
+      nl.style = "background-image: linear-gradient(to right, " + nations[k].color + ");" + " background-repeat: no-repeat; cursor: pointer; padding-top: 7px; padding-bottom: 7px; border: 1px solid white;"
       natsList.appendChild(nl);
     }
   }
@@ -342,7 +389,7 @@ function a() {
   } else if (alliances.Beta.includes(one.key) && alliances.Beta.includes(two.key)) {
     document.getElementById('result').textContent = 'NONE: Allies!'
   } else if (alliances.Gamma.includes(one.key) && alliances.Gamma.includes(two.key)) {
-      document.getElementById('result').textContent = 'NONE: Allies!'
+    document.getElementById('result').textContent = 'NONE: Allies!'
   } else {
     let twon = ''
     let onen = ''
@@ -445,6 +492,11 @@ function createButton(class_, textContent, function_) {
 }
 
 window.onload = function () {
+  for (const i in ideologies) {
+    if (!ideologies[i].hasOwnProperty('leader')) {
+      ideologies[i]['leader'] = 'LEADER'
+    }
+  }
   console.log('hi')
   for (const c of document.getElementById('nats').children) {
     document.getElementById('nats').removeChild(c)
