@@ -219,6 +219,10 @@ function choiceR(dict) {
   return rk;
 }
 
+function isd(n, n2) {
+  return n % n2 === 0;
+}
+
 function tick() {
   ycounter += 0.5
   if (ycounter == 10.0) {
@@ -230,7 +234,7 @@ function tick() {
     backMap = {}
     for (const k in nations) {
       if (nations[k].hasOwnProperty('elections')) {
-        if (year % nations[k].elections) {
+        if (isd(year, 4)) {
           nations[k].ideology = choiceR(ideologies)
         }
       }
