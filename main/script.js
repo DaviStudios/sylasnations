@@ -162,7 +162,7 @@ let nations = {
   "PAP": {
     key: "PAP",
     name: "Vatican City",
-    ideology: "monarchist",
+    ideology: "theocratic",
     power: 1,
     changeMin: 1,
     changeMax: 1,
