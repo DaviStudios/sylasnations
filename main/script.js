@@ -150,6 +150,7 @@ let used = false
 let mods = []
 let menuMods = false
 let bType = 3
+let ny = 10.0
 
 function c() {
   const entries = Object.entries(nations);
@@ -225,7 +226,7 @@ function isd(n, n2) {
 
 function tick() {
   ycounter += 0.5
-  if (ycounter == 10.0) {
+  if (ycounter == ny) {
     year += 1
     ycounter = 0
     document.getElementById('year').textContent = 'YEAR: ' + year
@@ -234,13 +235,16 @@ function tick() {
     backMap = {}
     for (const k in nations) {
       if (nations[k].hasOwnProperty('elections')) {
-        if (nations[k].hasOwnProperty('lastElected') {
-          if (isd(year, 4) == false && nations[k].lastElected !== year) {
-            nations[k].ideology = choiceR(ideologies)
-            nations[k].lastElected = year
+        if (nations[k].hasOwnProperty('nextElection')) {
+          if (nations[k].nextElection == year) {
+            const c = Math.random()
+            if (c <= 0.35) {
+              nations[k].ideology = choiceR(ideologies)
+            }
+            nations[k].nextElection += nations[k].elections
           }
         } else {
-          nations[k]['lastElected'] = 1
+          nations[k]['nextElection'] = nations[k].elections
         }
       }
       const idea = nations[k].ideology
