@@ -234,8 +234,13 @@ function tick() {
     backMap = {}
     for (const k in nations) {
       if (nations[k].hasOwnProperty('elections')) {
-        if (isd(year, 4) == false) {
-          nations[k].ideology = choiceR(ideologies)
+        if (nations[k].hasOwnProperty('lastElected') {
+          if (isd(year, 4) == false && nations[k].lastElected !== year) {
+            nations[k].ideology = choiceR(ideologies)
+            nations[k].lastElected = year
+          }
+        } else {
+          nations[k]['lastElected'] = 1
         }
       }
       const idea = nations[k].ideology
